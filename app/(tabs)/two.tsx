@@ -10,17 +10,20 @@ import { useEffect, useState } from 'react';
 export default function TabTwoScreen() {
   const database = getDatabase(FirebaseApp);
 
-  const [dbValues, setDbValues] = useState({});
-
+  // const [dbValues, setDbValues] = useState({'test':{'bool':false, float:'15.6', int:5}});
+  const [data, setData] = useState({'test':{'bool':false, float:'15.6', int:5}});
   const db = getDatabase();
   const starCountRef = ref(db);
   const test = ()=>{
-    setDbValues({})
     onValue(starCountRef, (snapshot) => {
-      const data = snapshot.val();
-      data['test']['bool'] = true
+      setData(snapshot.val());
+      console.log('data');
+      console.log(data);
+      console.log('data');
       
-      setDbValues({... data});
+      setData({... data, test: {... data.test, bool:!data['test']['bool']}})
+      
+      // setDbValues({... data});
       const key = snapshot.key;
       console.log(data);
     });
@@ -28,12 +31,21 @@ export default function TabTwoScreen() {
     
     // const updates = {};
     console.log("UPDATED");
-    return update(ref(db), dbValues)
-
+    update(ref(db), data)
+    .then((res)=>{
+      console.log("certo");
+      
+      console.log(res);}
+    )
+    .catch((res)=>{
+      console.log("errado");
+      console.log(res);
+      
+    })
   }
-  useEffect(()=>{console.log("...");
-   console.log(dbValues);
-  },[dbValues])
+  // useEffect(()=>{console.log("...");
+  //  console.log(dbValues);
+  // },[dbValues])
   // const newPostKey = push(child(ref(db),'')).key;
   return (
     <View style={styles.container}>

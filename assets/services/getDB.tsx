@@ -7,39 +7,24 @@ import { getStorage } from 'firebase/storage'
 // TODO: Replace the following with your app's Firebase project configuration
 // See: https://support.google.com/firebase/answer/7015592
 const firebaseConfig = {
-    apiKey: "AIzaSyBg9tfyq3JPl8vn5oNgBvtTRrUnVOyIujk",
-    authDomain: "gamexperience-lindomas.firebaseapp.com",
-    projectId: "gamexperience-lindomas",
-    storageBucket: "gamexperience-lindomas.appspot.com",
-    messagingSenderId: "1027391812450",
-    appId: "1:1027391812450:web:1c1bd9cc6b5a901f5ff23b"
-};
+    apiKey: "AIzaSyDaZX_aDk5ABx_VTdGbj7ucf7TmvA4zHmo",
+    authDomain: "dogfeeder-dd675.firebaseapp.com",
+    databaseURL: "https://dogfeeder-dd675-default-rtdb.firebaseio.com",
+    projectId: "dogfeeder-dd675",
+    storageBucket: "dogfeeder-dd675.appspot.com",
+    messagingSenderId: "782444175838",
+    appId: "1:782444175838:web:74ad90438b1d7ccd4e3d4f"
+  };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
-
-
 
 
 async function getDB() {
     return getFirestore(app);
 }
 
-// async function getUserAuth(){
-//     const auth = initializeAuth(app, {
-//         persistence: getReactNativePersistence(ReactNativeAsyncStorage)
-//       });
-//       return auth
-// }
-// async function getStorage(){
-//     return getStorage(app)
-// }
-var files = [];
-var reader = new FileReader();
-
+export const FirebaseApp = app;
 export default getDB;
 export const storage = getStorage(app)
 
-// Initialize Cloud Firestore and get a reference to the service
-// const db = 

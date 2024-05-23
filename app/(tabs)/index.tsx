@@ -26,7 +26,7 @@ export default function TabOneScreen() {
     qtdPorcao: '2',
     intervalo: '50'
   })
-  const [editable, setEditable] = useState(false)
+  const [editable, setEditable] = useState(true)
   const getColor = () => {
     switch (basicInfos.nivel) {
       case '1':
@@ -54,6 +54,9 @@ export default function TabOneScreen() {
   let i = 0;
   return (
     <View style={styles.container}>
+      {/* https://dogfeeder-dd675-default-rtdb.firebaseio.com/
+        AIzaSyDaZX_aDk5ABx_VTdGbj7ucf7TmvA4zHmo
+      */}
       <Text style={styles.title}>Controle</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <View>

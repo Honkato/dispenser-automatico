@@ -11,17 +11,46 @@ export default function TabTwoScreen() {
   const database = getDatabase(FirebaseApp);
 
   // const [dbValues, setDbValues] = useState({'test':{'bool':false, float:'15.6', int:5}});
-  const [data, setData] = useState({'test':{'bool':false, float:'15.6', int:5}});
+  const [data, setData] = useState({'test':{'DefaultBool':false,'OpenTotalBool':false,'bool':false, float:'15.6', int:5}});
   const db = getDatabase();
   const starCountRef = ref(db);
-  const test = ()=>{
+  const defaultBoolTrue = ()=>{
     onValue(starCountRef, (snapshot) => {
       setData(snapshot.val());
       console.log('data');
       console.log(data);
       console.log('data');
       
-      setData({... data, test: {... data.test, bool:!data['test']['bool']}})
+      setData({... data, test: {... data.test, bool:!data['test']['DefaultBool']}})
+      
+      // setDbValues({... data});
+      const key = snapshot.key;
+      console.log(data);
+    });
+    console.log(starCountRef);
+    
+    // const updates = {};
+    console.log("UPDATED");
+    update(ref(db), data)
+    .then((res)=>{
+      console.log("certo");
+      
+      console.log(res);}
+    )
+    .catch((res)=>{
+      console.log("errado");
+      console.log(res);
+      
+    })
+  }
+  const fullBoolTrue = ()=>{
+    onValue(starCountRef, (snapshot) => {
+      setData(snapshot.val());
+      console.log('data');
+      console.log(data);
+      console.log('data');
+      
+      setData({... data, test: {... data.test, bool:!data['test']['OpenTotalBool']}})
       
       // setDbValues({... data});
       const key = snapshot.key;
@@ -51,7 +80,8 @@ export default function TabTwoScreen() {
     <View style={styles.container}>
       <Text style={styles.title}>Logs</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <Button title='test' onPress={test}></Button>
+      <Button title='default' onPress={defaultBoolTrue}></Button>
+      <Button title='full' onPress={fullBoolTrue}></Button>
       <Text style={styles.title}>{JSON.stringify(database)}</Text>
       {/* <EditScreenInfo path="app/(tabs)/two.tsx" /> */}
       {/* https://dogfeeder-dd675-default-rtdb.firebaseio.com/

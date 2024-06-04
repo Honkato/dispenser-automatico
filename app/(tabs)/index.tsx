@@ -4,6 +4,8 @@ import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
 import { useState } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { getDatabase, ref, child, push, onValue, update } from "firebase/database";
+import { FirebaseApp } from '@/assets/services/getDB';
 
 export default function TabOneScreen() {
   /*
@@ -21,12 +23,70 @@ export default function TabOneScreen() {
   https://github.com/ProjetoLindomal/gameXperience/blob/main/screens/cadastro/index.js
 
   */
+  const db = getDatabase();
+  const starCountRef = ref(db);
+  const defaultBoolTrue = ()=>{
+    onValue(starCountRef, (snapshot) => {
+      // setData(snapshot.val());
+      console.log('data');
+      // console.log(data);
+      console.log();
+      
+      // setData({... data, test: {... data.test, bool:!data['test']['DefaultBool']}})
+      
+      // setDbValues({... data});
+      const key = snapshot.key;
+      // console.log(data);
+    });
+    console.log(starCountRef);
+    
+    // const updates = {};
+
+    let newData = {'test':{'DefaultBool':false,'OpenTotalBool':false,'bool':false, float:'15.6', int:5}}
+    newData.test.DefaultBool = true
+    console.log("UPDATED");
+    return update(ref(db), newData)
+  .then((res)=>{
+    console.log("certo");
+    
+    console.log(res);}
+  )
+  .catch((res)=>{
+    console.log("errado");
+    console.log(res);
+    
+  })
+    
+    
+  }
+  const fullBoolTrue = ()=>{
+    
+    let newData = {'test':{'DefaultBool':false,'OpenTotalBool':false,'bool':false, float:'15.6', int:5}}
+    newData.test.OpenTotalBool = true
+    console.log("UPDATED");
+    return update(ref(db), newData)
+  .then((res)=>{
+    console.log("certo");
+    
+    console.log(res);}
+  )
+  .catch((res)=>{
+    console.log("errado");
+    console.log(res);
+    
+  })
+    // console.log(starCountRef);
+    
+    // const updates = {};
+  }
+
+
   const [basicInfos, setBasicInfos] = useState({
     nivel: '3',
     qtdPorcao: '2',
     intervalo: '50'
   })
-  const [editable, setEditable] = useState(true)
+  const [editable, setEditable] = useState(false)
   const getColor = () => {
     switch (basicInfos.nivel) {
       case '1':
@@ -100,9 +160,13 @@ export default function TabOneScreen() {
               (0 Hrs 50 Min)
             </Text>
           </View>
-          <Button color={'lightgreen'} disabled={editable} title='Salvar'></Button>
+          <Button color={'lightgreen'} disabled={! editable} title='Salvar'></Button>
         </View>
-        <Button title='ativar'></Button>
+        {/* <Button title='ativar'></Button> */}
+          <Button title='Fase 1' onPress={defaultBoolTrue}></Button>
+          <View style={{height:10}}></View>
+          <Button title='Fase 2' onPress={fullBoolTrue}></Button>
+
         <Text>
           Tempo até a proxima ativação:
         </Text>
